@@ -56,3 +56,5 @@ console.log(myArray);
 myArray.deleteAtIndex(0);
 console.log('After deleteAtIndex ');
 console.log(myArray);
+
+//ConnectionRetryCount=1;ConnectionRetryDelay=1200;
