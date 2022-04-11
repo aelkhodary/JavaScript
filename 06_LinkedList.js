@@ -75,11 +75,13 @@ class LinkedList {
         //TODO Check Params
         if (index >= this.length) {
             this.append(value);
-            return this.printList();
+            this.length++;
+            return this;
         }
         if (index == 0) {
             this.prepend(value);
-            return this.printList();
+            this.length++;
+            return this;
         }
 
         const newNode = new Node(value);
@@ -87,7 +89,8 @@ class LinkedList {
         const holdingPointer = leaderNode.next;
         leaderNode.next = newNode;
         newNode.next = holdingPointer;
-
+        this.length++;
+        return this;
     }
     __traversToIndex(index) {
         let count = 0;
@@ -97,6 +100,29 @@ class LinkedList {
             count++;
         }
         return currentNode;
+    }
+    remove(index) {
+        //TODO Check Params
+        if (index == 0) {
+            const leaderNode = this.__traversToIndex(0);
+            const firstNode = leaderNode.next;
+            this.head = firstNode;
+            this.length--;
+            return this;
+        }
+
+        if (index >= this.length) {
+            const leaderNode = this.__traversToIndex(this.length - 1);
+            /*const removedNode = leaderNode.next;
+            this.tail = leaderNode;*/
+            this.length--;
+            return this;
+        }
+        const leaderNode = this.__traversToIndex(index - 1);
+        const removedNode = leaderNode.next;
+        leaderNode.next = removedNode.next;
+        this.length--;
+        return this;
     }
 }
 
@@ -115,4 +141,11 @@ console.log('06 ==>', myLinkedList.printList());
 myLinkedList.insert(0, 997);
 myLinkedList.insert(2, 998);
 myLinkedList.insert(20, 999);
-console.log('06 ==>', myLinkedList.printList());
+console.log('07 ==>', myLinkedList.printList());
+/* myLinkedList.remove(2);
+myLinkedList.remove(3);
+console.log('08 ==>', myLinkedList.printList());
+myLinkedList.remove(0);*/
+console.log('09 ==>', myLinkedList.printList());
+myLinkedList.remove(200);
+console.log('10 ==>', myLinkedList.printList());
