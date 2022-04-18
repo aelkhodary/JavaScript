@@ -1,6 +1,6 @@
 // 10-->5--->16
 // Create the below linked list:
-// myLinkedList = {
+// myDoublyLinkedList = {
 //   head: {
 //     value: 10
 //     next: {
@@ -8,22 +8,25 @@
 //       next: {
 //         value: 16
 //         next: null
+//         prev:null 
 //       }
 //     }
+//     prev:null 
 //   }
 // };
 class Node {
     constructor(value) {
         this.value = value;
         this.next = null;
+        this.prev = null;
     }
 }
-class LinkedList {
-
+class DoublyLinkedList {
     constructor(value) {
         this.head = {
             value: value,
-            next: null
+            next: null,
+            prev: null
         };
         this.tail = this.head;
         this.length = 1;
@@ -31,12 +34,14 @@ class LinkedList {
     //TODO add new field at the end of linked list
     append(value) {
         //Code here
-        /*const newNode = {
+        const newNode = {
             value: value,
-            next: null
-        };*/
-        const newNode = new Node(value);
+            next: null,
+            prev: null
+        };
+        //const newNode = new Node(value);
         /*******/
+        newNode.prev = this.tail;
         this.tail.next = newNode;
         this.tail = newNode;
         this.length++;
@@ -103,14 +108,12 @@ class LinkedList {
         return currentNode;
     }
     remove(index) {
-        console.log("Start Time --->" + new Date().getTime())
         //TODO Check Params
         if (index == 0) {
             const leaderNode = this.__traversToIndex(0);
             const firstNode = leaderNode.next;
             this.head = firstNode;
             this.length--;
-            console.log("End Time --->" + new Date().getTime());
             return this;
         }
 
@@ -119,64 +122,39 @@ class LinkedList {
             /*const removedNode = leaderNode.next;
             this.tail = leaderNode;*/
             this.length--;
-            console.log("End Time --->" + new Date().getTime());
             return this;
         }
         const leaderNode = this.__traversToIndex(index - 1);
         const removedNode = leaderNode.next;
         leaderNode.next = removedNode.next;
         this.length--;
-        console.log("End Time --->" + new Date().getTime());
         return this;
-
     }
-
-    reverse() {
-        if (!this.head.next) {
-            return this.head;
-        }
-
-        let first = this.head;
-        this.tail = this.head;
-        let second = first.next;
-        while (second) {
-            const temp = second.next;
-            second.next = first;
-            first = second;
-            second = temp;
-        }
-        this.head.next = null;
-        this.head = first;
-        return this;
-
-    }
-
-
-
 }
 
-let myLinkedList = new LinkedList(10);
-//console.log('01   ', myLinkedList)
+let myLinkedList = new DoublyLinkedList(10);
+console.log('01   ', myLinkedList)
 myLinkedList.append(5);
-//console.log('02   ', myLinkedList)
 myLinkedList.append(16);
+console.log('02   ', myLinkedList)
+console.log('06 ==>', myLinkedList.printList());
+/*
 //console.log('03   ', myLinkedList)
 myLinkedList.append(18);
 //console.log('04   ', myLinkedList)
 myLinkedList.prepend(9);
-console.log('05   ', myLinkedList)
+//console.log('05   ', myLinkedList)
 
-console.log('06 ==>', myLinkedList.printList());
-myLinkedList.insert(0, 997);
+
+myLinkedList.insert(0, 997); 
 myLinkedList.insert(2, 998);
 myLinkedList.insert(20, 999);
 console.log('07 ==>', myLinkedList.printList());
-myLinkedList.remove(2);
+/* myLinkedList.remove(2);
 myLinkedList.remove(3);
 console.log('08 ==>', myLinkedList.printList());
 myLinkedList.remove(0);
 console.log('09 ==>', myLinkedList.printList());
-/*myLinkedList.remove(200);
-console.log('10 ==>', myLinkedList.printList());*/
-myLinkedList.reverse();
-console.log('10 ==>', myLinkedList.printList()); 
+myLinkedList.remove(200);
+console.log('10 ==>', myLinkedList.printList());
+*/
